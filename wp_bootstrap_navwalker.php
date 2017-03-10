@@ -73,7 +73,7 @@ class Wp_Bootstrap_Navwalker extends \Walker_Nav_Menu {
 
             $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
 
-            if ( $args->has_children ) {
+            if ( $args->walker->has_children ) {
                 $class_names .= ' dropdown';
             }
 
@@ -93,8 +93,8 @@ class Wp_Bootstrap_Navwalker extends \Walker_Nav_Menu {
             $atts['target'] = ! empty( $item->target )    ? $item->target    : '';
             $atts['rel']    = ! empty( $item->xfn )        ? $item->xfn    : '';
 
-            // If item has_children add atts to a.
-            if ( $args->has_children && $depth === 0 ) {
+            // If item walker->has_children add atts to a.
+            if ( $args->walker->has_children && $depth === 0 ) {
                 $atts['href']           = '#';
                 $atts['data-toggle']    = 'dropdown';
                 $atts['class']            = 'dropdown-toggle';
@@ -126,7 +126,7 @@ class Wp_Bootstrap_Navwalker extends \Walker_Nav_Menu {
                 : sprintf( '<a%s><span class="glyphicon %s"></span>&nbsp;', $attributes, esc_attr( $item->attr_title ) );
 
             $item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
-            $item_output .= ( $args->has_children && 0 === $depth )
+            $item_output .= ( $args->walker->has_children && 0 === $depth )
                 ? ' <span class="caret"></span></a>'
                 : '</a>';
             $item_output .= $args->after;
